@@ -249,28 +249,27 @@ while(1) {
 Простой скрипт, который перехватывает сигнал окончания работы SIGTERM:
 
 ```php
-<?
+<?php
 
 # назначаем обработчик сигнала
 declare(ticks = 1);
 pcntl_signal(SIGTERM, "sig_handler");
 
 # обработчик сигнала
-function sig_handler($signo)
+function signalHandler($signo): void
 {
-        echo "\n" . 'received signal ' . $signo . "\n";
+    echo "\n" . 'received signal ' . $signo . "\n";
 }
 
 # бесконечный цикл
 while ( true )
 {
-	for ( $i = 0; $i < 3; $i++ )
-	{
-		echo '.';
-		sleep(1);
-	}
+     for ( $i = 0; $i < 3; $i++ ){
+	   echo '.';
+	   sleep(1);
+     }
 
-	echo "\n";
+     echo "\n";
 }
 ```
 
@@ -320,7 +319,8 @@ To maintain the stream resource something like this can be helpful:
 ```php
 <?php
 
-function detectRequestBody() {
+function detectRequestBody(): string 
+{
     $rawInput = fopen('php://input', 'r');
     $tempStream = fopen('php://temp', 'r+');
     stream_copy_to_stream($rawInput, $tempStream);
